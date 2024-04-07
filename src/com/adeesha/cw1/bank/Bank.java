@@ -2,7 +2,6 @@ package com.adeesha.cw1.bank;
 
 import com.adeesha.cw1.bank.account.AccountType;
 import com.adeesha.cw1.bank.account.BankAccount;
-import com.adeesha.cw1.bank.customer.Customer;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -18,8 +17,8 @@ public class Bank {
         this.bankAccountList = accountList;
     }
 
-    public BankAccount createAccount(String accountNumber, List<Customer> customerList, AccountType accountType, boolean isOverDrawAvailable, double overdraftLimit) {
-        BankAccount bankAccount = new BankAccount(accountNumber, customerList, accountType, isOverDrawAvailable, overdraftLimit);
+    public BankAccount createAccount(String accountNumber, AccountType accountType, boolean isOverDrawAvailable, double overdraftLimit) {
+        BankAccount bankAccount = new BankAccount(accountNumber, accountType, isOverDrawAvailable, overdraftLimit);
         bankAccountList.add(bankAccount);
         return bankAccount;
     }

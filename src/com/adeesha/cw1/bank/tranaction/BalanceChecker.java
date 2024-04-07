@@ -11,7 +11,7 @@ import static com.adeesha.cw1.bank.util.Constants.DECIMAL_FORMAT_PATTERN;
 public class BalanceChecker implements Runnable {
     private final BankAccount bankAccount;
     private final Customer balanceCheckCustomer;
-    DecimalFormat df = new DecimalFormat(DECIMAL_FORMAT_PATTERN);
+    private final DecimalFormat df = new DecimalFormat(DECIMAL_FORMAT_PATTERN);
 
     public BalanceChecker(Customer customer, BankAccount bankAccount) {
         this.bankAccount = bankAccount;
@@ -25,13 +25,13 @@ public class BalanceChecker implements Runnable {
             if (customer.equals(balanceCheckCustomer)) {
                 try {
                     BigDecimal balance = bankAccount.getBalance();
-                    System.out.println(Thread.currentThread().getName() + ": Balance checking successful. Account: " + bankAccount.getAccountNumber() + ",  Balance: " + df.format(balance) + ", Customer: " + customer.getCustomerID());
+                    System.out.println(Thread.currentThread().getName() + ": balance checking successful. Account: " + bankAccount.getAccountNumber() + ",  Balance: " + df.format(balance) + ", Customer: " + customer.getCustomerID());
                 } catch (Exception e) {
-                    System.out.println(Thread.currentThread().getName() + ": Error in checking balance of account: " + bankAccount.getAccountNumber() + ", Error: " + e.getMessage());
+                    System.out.println(Thread.currentThread().getName() + ": error in checking balance of account: " + bankAccount.getAccountNumber() + ", Error: " + e.getMessage());
                 }
                 return;
             }
         }
-        System.out.println("Balance check failed. Customer " + balanceCheckCustomer.getCustomerID() + " is not an owner of account: " + bankAccount.getAccountNumber());
+        System.out.println(Thread.currentThread().getName() + ": balance check failed. Customer " + balanceCheckCustomer.getCustomerID() + " is not an owner of account: " + bankAccount.getAccountNumber());
     }
 }

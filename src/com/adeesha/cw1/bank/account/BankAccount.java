@@ -5,6 +5,7 @@ import com.adeesha.cw1.bank.customer.Customer;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.adeesha.cw1.bank.util.Constants.*;
@@ -18,10 +19,10 @@ public class BankAccount {
     private BigDecimal overdraftLimit;
     private final DecimalFormat df;
 
-    public BankAccount(String accountNumber, List<Customer> customerList, AccountType accountType, boolean isOverdraftAvailable, double overdraftLimit) {
+    public BankAccount(String accountNumber, AccountType accountType, boolean isOverdraftAvailable, double overdraftLimit) {
         this.balance = BigDecimal.ZERO;
         this.accountNumber = accountNumber;
-        this.customerList = customerList;
+        this.customerList = new ArrayList<>();
         this.accountType = accountType;
         this.isOverdraftAvailable = isOverdraftAvailable;
         this.overdraftLimit = BigDecimal.valueOf(overdraftLimit);
@@ -50,7 +51,7 @@ public class BankAccount {
     public synchronized void withdraw(BigDecimal amount) {
         BigDecimal amountAvailable;
         if (amount.compareTo(BigDecimal.ZERO) > 0) {
-            if (isOverdraftAvailable) {
+            if (isOverdraftAvailable && amount.compareTo(balance) > 0) {
                 amountAvailable = balance.add(overdraftLimit);
             } else {
                 amountAvailable = balance;
@@ -79,7 +80,7 @@ public class BankAccount {
     public synchronized void addInterest(BigDecimal interest) {
         if (interest.compareTo(BigDecimal.ZERO) > 0) {
             balance = balance.add(interest);
-            System.out.println(Thread.currentThread().getName() + ": Interest add successful to account: " + accountNumber + ", Interest added: " + df.format(interest) + ", Balance after interest: " + df.format(balance));
+            System.out.println(Thread.currentThread().getName() + ": interest add successful to account: " + accountNumber + ", Interest added: " + df.format(interest) + ", Balance after interest: " + df.format(balance));
         } else {
             throw new IllegalArgumentException("Interest can not be 0 or below.");
         }
@@ -104,6 +105,7 @@ public class BankAccount {
             // overdraftFee = ((amount - balance) * OVERDRAFT_INTEREST_RATE) / 100
             BigDecimal overdraftFee = ((amount.subtract(balance)).multiply(OVERDRAFT_INTEREST_RATE)).divide(BigDecimal.valueOf(100), DEFAULT_SCALE, RoundingMode.HALF_UP);
             balance = balance.subtract(overdraftFee);
+            System.out.println(Thread.currentThread().getName() + ": overdrawn Account: " + accountNumber + ", Overdraft fee: " + df.format(overdraftFee) + ", Overdraft Limit available: " + df.format(overdraftLimit.add(balance)));
         }
     }
 
