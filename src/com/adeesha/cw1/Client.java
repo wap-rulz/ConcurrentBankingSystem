@@ -1,6 +1,15 @@
 package com.adeesha.cw1;
 
-import com.adeesha.cw1.bank.*;
+import com.adeesha.cw1.bank.Bank;
+import com.adeesha.cw1.bank.account.AccountType;
+import com.adeesha.cw1.bank.account.BankAccount;
+import com.adeesha.cw1.bank.customer.Customer;
+import com.adeesha.cw1.bank.manager.AnnualFeeCalculationManager;
+import com.adeesha.cw1.bank.manager.InterestCalculationManager;
+import com.adeesha.cw1.bank.manager.TaxCalculationManager;
+import com.adeesha.cw1.bank.tranaction.BalanceChecker;
+import com.adeesha.cw1.bank.tranaction.Depositor;
+import com.adeesha.cw1.bank.tranaction.Withdrawer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,9 +39,9 @@ public class Client {
 
         List<Customer> customerList3 = new ArrayList<>();
         Collections.addAll(customerList3, customer4, customer5);
-        BankAccount bankAccount3 = bank.createAccount("20240003", customerList3, AccountType.VIP, true, 50000);
+        BankAccount bankAccountVIP = bank.createAccount("20240003", customerList3, AccountType.VIP, true, 50000);
 
-        Collections.addAll(bankAccountList, bankAccount1, bankAccount2, bankAccount3);
+        Collections.addAll(bankAccountList, bankAccount1, bankAccount2, bankAccountVIP);
 
         //Create Thread Groups
         ThreadGroup bankManager = new ThreadGroup("BankManager");
@@ -75,22 +84,29 @@ public class Client {
         Thread withdrawerThread9 = new Thread(customerRegular, new Withdrawer(customer3, bankAccount2, 8000), "Withdrawer 9");
         Thread withdrawerThread10 = new Thread(customerRegular, new Withdrawer(customer3, bankAccount2, 9000), "Withdrawer 10");
 
-        Thread depositorThread11 = new Thread(customerVIP, new Depositor(bankAccount3, 1000), "Depositor 11");
-        Thread depositorThread12 = new Thread(customerVIP, new Depositor(bankAccount3, 2000), "Depositor 12");
-        Thread depositorThread13 = new Thread(customerVIP, new Depositor(bankAccount3, 3000), "Depositor 13");
-        Thread depositorThread14 = new Thread(customerVIP, new Depositor(bankAccount3, 4000), "Depositor 14");
-        Thread depositorThread15 = new Thread(customerVIP, new Depositor(bankAccount3, 5000), "Depositor 15");
+        Thread depositorThread11 = new Thread(customerVIP, new Depositor(bankAccountVIP, 1000), "Depositor 11");
+        Thread depositorThread12 = new Thread(customerVIP, new Depositor(bankAccountVIP, 2000), "Depositor 12");
+        Thread depositorThread13 = new Thread(customerVIP, new Depositor(bankAccountVIP, 3000), "Depositor 13");
+        Thread depositorThread14 = new Thread(customerVIP, new Depositor(bankAccountVIP, 4000), "Depositor 14");
+        Thread depositorThread15 = new Thread(customerVIP, new Depositor(bankAccountVIP, 5000), "Depositor 15");
 
-        Thread withdrawerThread11 = new Thread(customerVIP, new Withdrawer(customer4, bankAccount3, 5000), "Withdrawer 11");
-        Thread withdrawerThread12 = new Thread(customerVIP, new Withdrawer(customer4, bankAccount3, 6000), "Withdrawer 12");
-        Thread withdrawerThread13 = new Thread(customerVIP, new Withdrawer(customer4, bankAccount3, 7000), "Withdrawer 13");
-        Thread withdrawerThread14 = new Thread(customerVIP, new Withdrawer(customer5, bankAccount3, 8000), "Withdrawer 14");
-        Thread withdrawerThread15 = new Thread(customerVIP, new Withdrawer(customer5, bankAccount3, 9000), "Withdrawer 15");
+        Thread withdrawerThread11 = new Thread(customerVIP, new Withdrawer(customer4, bankAccountVIP, 5000), "Withdrawer 11");
+        Thread withdrawerThread12 = new Thread(customerVIP, new Withdrawer(customer4, bankAccountVIP, 6000), "Withdrawer 12");
+        Thread withdrawerThread13 = new Thread(customerVIP, new Withdrawer(customer4, bankAccountVIP, 7000), "Withdrawer 13");
+        Thread withdrawerThread14 = new Thread(customerVIP, new Withdrawer(customer5, bankAccountVIP, 8000), "Withdrawer 14");
+        Thread withdrawerThread15 = new Thread(customerVIP, new Withdrawer(customer5, bankAccountVIP, 9000), "Withdrawer 15");
+
+        Thread balanceCheckerThread1 = new Thread(customerRegular, new BalanceChecker(customer1, bankAccount1), "Balance Checker 1");
+        Thread balanceCheckerThread2 = new Thread(customerRegular, new BalanceChecker(customer2, bankAccount2), "Balance Checker 2");
+        Thread balanceCheckerThread3 = new Thread(customerVIP, new BalanceChecker(customer3, bankAccount2), "Balance Checker 3");
+        Thread balanceCheckerThread4 = new Thread(customerVIP, new BalanceChecker(customer4, bankAccountVIP), "Balance Checker 4");
+        Thread balanceCheckerThread5 = new Thread(customerVIP, new BalanceChecker(customer5, bankAccountVIP), "Balance Checker 5");
 
         Collections.addAll(threadList, depositorThread1, depositorThread2, depositorThread3, depositorThread4, depositorThread5, depositorThread6, depositorThread7,
                 depositorThread8, depositorThread9, depositorThread10, depositorThread11, depositorThread12, depositorThread13, depositorThread14, depositorThread15,
                 withdrawerThread1, withdrawerThread2, withdrawerThread3, withdrawerThread4, withdrawerThread5, withdrawerThread6, withdrawerThread7, withdrawerThread8,
                 withdrawerThread9, withdrawerThread10, withdrawerThread11, withdrawerThread12, withdrawerThread13, withdrawerThread14, withdrawerThread15,
+                balanceCheckerThread1, balanceCheckerThread2, balanceCheckerThread3, balanceCheckerThread4, balanceCheckerThread5,
                 annualFeeCalculationManager, interestCalculationManager, taxCalculationManager);
 
         for (Thread thread : threadList) {

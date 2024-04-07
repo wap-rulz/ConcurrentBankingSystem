@@ -1,4 +1,6 @@
-package com.adeesha.cw1.bank;
+package com.adeesha.cw1.bank.manager;
+
+import com.adeesha.cw1.bank.Bank;
 
 public class AnnualFeeCalculationManager implements Runnable {
     private final Bank bank;

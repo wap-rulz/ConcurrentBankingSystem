@@ -1,12 +1,12 @@
-package com.adeesha.cw1.bank;
+package com.adeesha.cw1.bank.customer;
 
 public class Customer {
-    private String customerID;
-    private String firstName;
-    private String lastName;
-    private String contactNo;
-    private String address;
-    private String nicNo;
+    private final String customerID;
+    private final String firstName;
+    private final String lastName;
+    private final String contactNo;
+    private final String address;
+    private final String nicNo;
 
     public Customer(String customerID, String firstName, String lastName, String contactNo, String address, String nicNo) {
         this.customerID = customerID;

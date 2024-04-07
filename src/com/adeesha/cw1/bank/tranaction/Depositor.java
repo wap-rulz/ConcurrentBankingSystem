@@ -1,4 +1,6 @@
-package com.adeesha.cw1.bank;
+package com.adeesha.cw1.bank.tranaction;
+
+import com.adeesha.cw1.bank.account.BankAccount;
 
 import java.math.BigDecimal;
 

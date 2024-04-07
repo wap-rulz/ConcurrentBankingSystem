@@ -1,4 +1,4 @@
-package com.adeesha.cw1.bank;
+package com.adeesha.cw1.bank.util;
 
 import java.math.BigDecimal;
 

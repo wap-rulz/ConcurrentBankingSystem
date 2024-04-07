@@ -1,4 +1,4 @@
-package com.adeesha.cw1.bank;
+package com.adeesha.cw1.bank.account;
 
 public enum AccountType {
     VIP(5, 0),
@@ -7,7 +7,7 @@ public enum AccountType {
     private final double interestRate;
     private final double annualFee;
 
-    private AccountType(double interestRate, double annualFee) {
+    AccountType(double interestRate, double annualFee) {
         this.interestRate = interestRate;
         this.annualFee = annualFee;
     }

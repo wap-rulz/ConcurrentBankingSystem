@@ -1,11 +1,15 @@
 package com.adeesha.cw1.bank;
 
+import com.adeesha.cw1.bank.account.AccountType;
+import com.adeesha.cw1.bank.account.BankAccount;
+import com.adeesha.cw1.bank.customer.Customer;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-import static com.adeesha.cw1.bank.Constants.DEFAULT_SCALE;
-import static com.adeesha.cw1.bank.Constants.INCOME_TAX_RATE;
+import static com.adeesha.cw1.bank.util.Constants.DEFAULT_SCALE;
+import static com.adeesha.cw1.bank.util.Constants.INCOME_TAX_RATE;
 
 public class Bank {
     private final List<BankAccount> bankAccountList;

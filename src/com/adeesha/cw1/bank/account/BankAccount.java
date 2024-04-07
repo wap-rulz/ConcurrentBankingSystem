@@ -1,12 +1,13 @@
-package com.adeesha.cw1.bank;
+package com.adeesha.cw1.bank.account;
+
+import com.adeesha.cw1.bank.customer.Customer;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
 
-import static com.adeesha.cw1.bank.Constants.DEFAULT_SCALE;
-import static com.adeesha.cw1.bank.Constants.OVERDRAFT_INTEREST_RATE;
+import static com.adeesha.cw1.bank.util.Constants.*;
 
 public class BankAccount {
     private String accountNumber;
@@ -24,7 +25,7 @@ public class BankAccount {
         this.accountType = accountType;
         this.isOverdraftAvailable = isOverdraftAvailable;
         this.overdraftLimit = BigDecimal.valueOf(overdraftLimit);
-        this.df = new DecimalFormat("#0.00");
+        this.df = new DecimalFormat(DECIMAL_FORMAT_PATTERN);
     }
 
     public void addCustomer(Customer customer) {
