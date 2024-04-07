@@ -2,11 +2,10 @@ package com.adeesha.cw1.bank.tranaction;
 
 import com.adeesha.cw1.bank.account.BankAccount;
 import com.adeesha.cw1.bank.customer.Customer;
+import com.adeesha.cw1.bank.util.Constants;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-
-import static com.adeesha.cw1.bank.util.Constants.DECIMAL_FORMAT_PATTERN;
 
 public class Withdrawer implements Runnable {
     private final Customer withdrawCustomer;
@@ -18,7 +17,7 @@ public class Withdrawer implements Runnable {
         this.withdrawCustomer = customer;
         this.bankAccount = bankAccount;
         this.amount = BigDecimal.valueOf(amount);
-        this.df = new DecimalFormat(DECIMAL_FORMAT_PATTERN);
+        this.df = new DecimalFormat(Constants.DECIMAL_FORMAT_PATTERN);
     }
 
     @Override

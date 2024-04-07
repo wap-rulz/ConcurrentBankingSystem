@@ -2,13 +2,11 @@ package com.adeesha.cw1.bank;
 
 import com.adeesha.cw1.bank.account.AccountType;
 import com.adeesha.cw1.bank.account.BankAccount;
+import com.adeesha.cw1.bank.util.Constants;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-
-import static com.adeesha.cw1.bank.util.Constants.DEFAULT_SCALE;
-import static com.adeesha.cw1.bank.util.Constants.INCOME_TAX_RATE;
 
 public class Bank {
     private final List<BankAccount> bankAccountList;
@@ -45,13 +43,13 @@ public class Bank {
     private BigDecimal calculateInterest(BankAccount bankAccount) {
         // interest = (bankAccount.getBalance() * bankAccount.getAccountType().getInterestRate()) / 100) / 12
         return ((bankAccount.getBalance().multiply(BigDecimal.valueOf(bankAccount.getAccountType().getInterestRate())))
-                .divide(BigDecimal.valueOf(100), DEFAULT_SCALE, RoundingMode.HALF_UP)).divide(BigDecimal.valueOf(12), DEFAULT_SCALE, RoundingMode.HALF_UP);
+                .divide(BigDecimal.valueOf(100), Constants.DEFAULT_SCALE, RoundingMode.HALF_UP)).divide(BigDecimal.valueOf(12), Constants.DEFAULT_SCALE, RoundingMode.HALF_UP);
     }
 
     public void deductTax() {
         for (BankAccount bankAccount : bankAccountList) {
             // tax = (calculateInterest(bankAccount) * INCOME_TAX_RATE) / 100;
-            BigDecimal tax = (calculateInterest(bankAccount).multiply(INCOME_TAX_RATE)).divide(BigDecimal.valueOf(100), DEFAULT_SCALE, RoundingMode.HALF_UP);
+            BigDecimal tax = (calculateInterest(bankAccount).multiply(Constants.INCOME_TAX_RATE)).divide(BigDecimal.valueOf(100), Constants.DEFAULT_SCALE, RoundingMode.HALF_UP);
             bankAccount.deductTax(tax);
         }
     }

@@ -2,16 +2,15 @@ package com.adeesha.cw1.bank.tranaction;
 
 import com.adeesha.cw1.bank.account.BankAccount;
 import com.adeesha.cw1.bank.customer.Customer;
+import com.adeesha.cw1.bank.util.Constants;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
-import static com.adeesha.cw1.bank.util.Constants.DECIMAL_FORMAT_PATTERN;
-
 public class BalanceChecker implements Runnable {
     private final BankAccount bankAccount;
     private final Customer balanceCheckCustomer;
-    private final DecimalFormat df = new DecimalFormat(DECIMAL_FORMAT_PATTERN);
+    private final DecimalFormat df = new DecimalFormat(Constants.DECIMAL_FORMAT_PATTERN);
 
     public BalanceChecker(Customer customer, BankAccount bankAccount) {
         this.bankAccount = bankAccount;

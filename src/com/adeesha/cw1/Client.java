@@ -10,6 +10,7 @@ import com.adeesha.cw1.bank.manager.TaxCalculationManager;
 import com.adeesha.cw1.bank.tranaction.BalanceChecker;
 import com.adeesha.cw1.bank.tranaction.Depositor;
 import com.adeesha.cw1.bank.tranaction.Withdrawer;
+import com.adeesha.cw1.bank.util.Constants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,13 +45,13 @@ public class Client {
 
         //Create Thread Groups
         ThreadGroup bankManager = new ThreadGroup("BankManager");
-        bankManager.setMaxPriority(8);
+        bankManager.setMaxPriority(Constants.BANK_MANAGER_PRIORITY);
 
-        ThreadGroup customerVIP = new ThreadGroup("VIP Customer");
-        customerVIP.setMaxPriority(10);
+        ThreadGroup customerVIP = new ThreadGroup("VIPCustomer");
+        customerVIP.setMaxPriority(Constants.VIP_CUSTOMER_PRIORITY);
 
-        ThreadGroup customerRegular = new ThreadGroup("Regular Customer");
-        customerRegular.setMaxPriority(5);
+        ThreadGroup customerRegular = new ThreadGroup("RegularCustomer");
+        customerRegular.setMaxPriority(Constants.REGULAR_CUSTOMER_PRIORITY);
 
         // Create Threads
         List<Thread> threadList = new ArrayList<>();

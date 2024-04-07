@@ -1,14 +1,13 @@
 package com.adeesha.cw1.bank.account;
 
 import com.adeesha.cw1.bank.customer.Customer;
+import com.adeesha.cw1.bank.util.Constants;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.adeesha.cw1.bank.util.Constants.*;
 
 public class BankAccount {
     private String accountNumber;
@@ -26,7 +25,7 @@ public class BankAccount {
         this.accountType = accountType;
         this.isOverdraftAvailable = isOverdraftAvailable;
         this.overdraftLimit = BigDecimal.valueOf(overdraftLimit);
-        this.df = new DecimalFormat(DECIMAL_FORMAT_PATTERN);
+        this.df = new DecimalFormat(Constants.DECIMAL_FORMAT_PATTERN);
     }
 
     public void addCustomer(Customer customer) {
@@ -103,7 +102,7 @@ public class BankAccount {
     public synchronized void chargeOverdraftFees(BigDecimal amount) {
         if (isOverdraftAvailable && (amount.compareTo(balance) > 0)) {
             // overdraftFee = ((amount - balance) * OVERDRAFT_INTEREST_RATE) / 100
-            BigDecimal overdraftFee = ((amount.subtract(balance)).multiply(OVERDRAFT_INTEREST_RATE)).divide(BigDecimal.valueOf(100), DEFAULT_SCALE, RoundingMode.HALF_UP);
+            BigDecimal overdraftFee = ((amount.subtract(balance)).multiply(Constants.OVERDRAFT_INTEREST_RATE)).divide(BigDecimal.valueOf(100), Constants.DEFAULT_SCALE, RoundingMode.HALF_UP);
             balance = balance.subtract(overdraftFee);
             System.out.println(Thread.currentThread().getName() + ": overdrawn Account: " + accountNumber + ", Overdraft fee: " + df.format(overdraftFee) + ", Overdraft Limit available: " + df.format(overdraftLimit.add(balance)));
         }
