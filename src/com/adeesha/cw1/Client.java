@@ -56,10 +56,12 @@ public class Client {
         // Create Threads
         List<Thread> threadList = new ArrayList<>();
 
+        // Interest, Annual Fee, Tax Manager Threads
         Thread annualFeeCalculationManager = new Thread(bankManager, new AnnualFeeCalculationManager(bank), "AnnualFeeCalculationManager");
         Thread interestCalculationManager = new Thread(bankManager, new InterestCalculationManager(bank), "InterestCalculationManager");
         Thread taxCalculationManager = new Thread(bankManager, new TaxCalculationManager(bank), "TaxCalculationManager");
 
+        //Deposit & Withdraw Threads
         Thread depositorThread1 = new Thread(customerRegular, new Depositor(bankAccount1, 1000), "Depositor-1");
         Thread depositorThread2 = new Thread(customerRegular, new Depositor(bankAccount1, 2000), "Depositor-2");
         Thread depositorThread3 = new Thread(customerRegular, new Depositor(bankAccount1, 3000), "Depositor-3");
@@ -96,17 +98,25 @@ public class Client {
         Thread withdrawerThread14 = new Thread(customerVIP, new Withdrawer(customer5, bankAccountVIP, 8000), "Withdrawer-14");
         Thread withdrawerThread15 = new Thread(customerVIP, new Withdrawer(customer5, bankAccountVIP, 9000), "Withdrawer-15");
 
+        //Balance Checking Threads
         Thread balanceCheckerThread1 = new Thread(customerRegular, new BalanceChecker(customer1, bankAccount1), "BalanceChecker-1");
         Thread balanceCheckerThread2 = new Thread(customerRegular, new BalanceChecker(customer2, bankAccount2), "BalanceChecker-2");
         Thread balanceCheckerThread3 = new Thread(customerVIP, new BalanceChecker(customer3, bankAccount2), "BalanceChecker-3");
         Thread balanceCheckerThread4 = new Thread(customerVIP, new BalanceChecker(customer4, bankAccountVIP), "BalanceChecker-4");
         Thread balanceCheckerThread5 = new Thread(customerVIP, new BalanceChecker(customer5, bankAccountVIP), "BalanceChecker-5");
 
+        //These threads raise exceptions as the following customers do not own respective bank accounts
+        Thread withdrawerThreadE1 = new Thread(customerRegular, new Withdrawer(customer1, bankAccount2, 5000), "Withdrawer-E1");
+        Thread withdrawerThreadE2 = new Thread(customerRegular, new Withdrawer(customer2, bankAccountVIP, 6000), "Withdrawer-E2");
+        Thread withdrawerThreadE3 = new Thread(customerVIP, new Withdrawer(customer3, bankAccount1, 7000), "Withdrawer-E3");
+
+        //Add all threads to a list to run them simultaneously
         Collections.addAll(threadList, depositorThread1, depositorThread2, depositorThread3, depositorThread4, depositorThread5, depositorThread6, depositorThread7,
                 depositorThread8, depositorThread9, depositorThread10, depositorThread11, depositorThread12, depositorThread13, depositorThread14, depositorThread15,
                 withdrawerThread1, withdrawerThread2, withdrawerThread3, withdrawerThread4, withdrawerThread5, withdrawerThread6, withdrawerThread7, withdrawerThread8,
                 withdrawerThread9, withdrawerThread10, withdrawerThread11, withdrawerThread12, withdrawerThread13, withdrawerThread14, withdrawerThread15,
                 balanceCheckerThread1, balanceCheckerThread2, balanceCheckerThread3, balanceCheckerThread4, balanceCheckerThread5,
+                withdrawerThreadE1, withdrawerThreadE2, withdrawerThreadE3,
                 annualFeeCalculationManager, interestCalculationManager, taxCalculationManager);
 
         for (Thread thread : threadList) {

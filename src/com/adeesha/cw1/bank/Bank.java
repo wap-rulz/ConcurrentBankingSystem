@@ -41,16 +41,22 @@ public class Bank {
     }
 
     private BigDecimal calculateInterest(BankAccount bankAccount) {
-        // interest = (bankAccount.getBalance() * bankAccount.getAccountType().getInterestRate()) / 100) / 12
-        return ((bankAccount.getBalance().multiply(BigDecimal.valueOf(bankAccount.getAccountType().getInterestRate())))
-                .divide(BigDecimal.valueOf(100), Constants.DEFAULT_SCALE, RoundingMode.HALF_UP)).divide(BigDecimal.valueOf(12), Constants.DEFAULT_SCALE, RoundingMode.HALF_UP);
+        if (bankAccount.getBalance().compareTo(BigDecimal.ZERO) > 0) {
+            // interest = (bankAccount.getBalance() * bankAccount.getAccountType().getInterestRate()) / 100) / 12
+            return ((bankAccount.getBalance().multiply(BigDecimal.valueOf(bankAccount.getAccountType().getInterestRate())))
+                    .divide(BigDecimal.valueOf(100), Constants.DEFAULT_SCALE, RoundingMode.HALF_UP)).divide(BigDecimal.valueOf(12), Constants.DEFAULT_SCALE, RoundingMode.HALF_UP);
+        } else {
+            return BigDecimal.ZERO;
+        }
     }
 
     public void deductTax() {
         for (BankAccount bankAccount : bankAccountList) {
             // tax = (calculateInterest(bankAccount) * INCOME_TAX_RATE) / 100;
             BigDecimal tax = (calculateInterest(bankAccount).multiply(Constants.INCOME_TAX_RATE)).divide(BigDecimal.valueOf(100), Constants.DEFAULT_SCALE, RoundingMode.HALF_UP);
-            bankAccount.deductTax(tax);
+            if (tax.compareTo(BigDecimal.ZERO) > 0) {
+                bankAccount.deductTax(tax);
+            }
         }
     }
 
