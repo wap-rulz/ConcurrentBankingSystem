@@ -70,7 +70,8 @@ public class BankAccount {
     public synchronized void deposit(BigDecimal amount) {
         if (amount.compareTo(BigDecimal.ZERO) > 0) {
             balance = balance.add(amount);
-            System.out.println(Thread.currentThread().getName() + ": deposit successful to account: " + accountNumber + ", Amount deposited: " + df.format(amount) + ", Balance after deposit: " + df.format(balance));
+            System.out.println(Thread.currentThread().getName() + ": deposit successful to account: " + accountNumber +
+                    ", Amount deposited: " + df.format(amount) + ", Balance after deposit: " + df.format(balance));
         } else {
             throw new IllegalArgumentException("Amount to deposit can not be 0 or below.");
         }
