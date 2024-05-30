@@ -88,8 +88,12 @@ public class BankAccount {
 
     //Balance is allowed to go minus when charging tax
     public synchronized void deductTax(BigDecimal tax) {
-        balance = balance.subtract(tax);
-        System.out.println(Thread.currentThread().getName() + ": tax deducted from account: " + accountNumber + ", amount: " + df.format(tax) +", Balance after deduction: " + df.format(balance));
+        if (tax.compareTo(BigDecimal.ZERO) > 0) {
+            balance = balance.subtract(tax);
+            System.out.println(Thread.currentThread().getName() + ": tax deducted from account: " + accountNumber + ", amount: " + df.format(tax) + ", Balance after deduction: " + df.format(balance));
+        } else {
+            System.out.println("Tax can not be 0 or below. Tax: " + df.format(tax));
+        }
     }
 
     //Balance is allowed to go minus when charging annual fee
@@ -97,6 +101,8 @@ public class BankAccount {
         if (fee.compareTo(BigDecimal.ZERO) > 0) {
             balance = balance.subtract(fee);
             System.out.println(Thread.currentThread().getName() + ": annual fee deducted from account: " + accountNumber + ", amount: " + df.format(fee) + ", Balance after deduction: " + df.format(balance));
+        } else {
+            System.out.println("Annual fee can not be 0 or below. Annual Fee: " + df.format(fee));
         }
     }
 

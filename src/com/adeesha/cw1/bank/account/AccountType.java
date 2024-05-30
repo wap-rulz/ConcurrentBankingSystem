@@ -1,7 +1,7 @@
 package com.adeesha.cw1.bank.account;
 
 public enum AccountType {
-    VIP(5, 0),
+    VIP(5, 1000),
     REGULAR(3, 500);
 
     private final double interestRate;
